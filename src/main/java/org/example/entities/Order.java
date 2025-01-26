@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Order {
     private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-    SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
+    
     private Date moment;
     private OrderStatus status;
     private Client client;
@@ -64,13 +64,18 @@ public class Order {
 
     @Override
     public String toString() {
-        return "ORDER SUMMARY" + "\n" +
-                "Order moment: " + sdf.format(moment) + "\n" +
-                "Order status: " + status + "\n" +
-                client.getName() + " (" +sdf2.format(client.getBirthDate()) + ")" + " - " + client.getEmail() + "\n" +
-                "Order Itens: " + "\n" +
-                products.toString() + "\n" +
-                "Total price: " + String.format("$%.2f", total())
-                ;
+        StringBuilder sb = new StringBuilder();
+        sb.append("Order moment: ");
+        sb.append(sdf.format(moment) + "\n");
+        sb.append("Order status: ");
+        sb.append(status + "\n");
+        sb.append(client.toString() + "\n");    
+        sb.append("Order Itens: " + "\n");
+        for (OrderItem p : products){
+            sb.append(p + "\n");
+        }
+        sb.append("Total price: ");
+        sb.append(String.format("$%.2f", total()));
+        return sb.toString();
     }
 }
